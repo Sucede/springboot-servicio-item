@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.sucede.sb.app.item.models.Item;
 import com.sucede.sb.app.item.models.Product;
 
-@Service
+@Service("serviceRestTemplate")
 public class ItemServiceImpl implements ItemService {
 	
 	@Autowired
@@ -21,7 +21,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> findAll() {
-		List<Product> products =Arrays.asList(clientRest.getForObject("http://localhost:8001/list", Product[].class));
+		List<Product> products =Arrays.asList(clientRest.getForObject("http://products-service/list", Product[].class));
 		return products.stream().map(p -> new Item(p,1)).collect(Collectors.toList());
 	}
 
@@ -29,7 +29,7 @@ public class ItemServiceImpl implements ItemService {
 	public Item findById(Long id, Integer quantity) {
 		Map<String, String> pathVariables = new HashMap<String, String>();
 		pathVariables.put("id", id.toString());
-		Product product =clientRest.getForObject("http://localhost:8001/view/{id}", Product.class, pathVariables);
+		Product product =clientRest.getForObject("http://products-service/view/{id}", Product.class, pathVariables);
 		return new Item(product, quantity);
 	}
 
