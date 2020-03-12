@@ -1,5 +1,7 @@
 package com.sucede.sb.app.item.models;
 
+import com.sucede.sb.app.commons.models.entity.Product;
+
 public class Item {
 
 	private Product product;
